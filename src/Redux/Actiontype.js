@@ -1,1 +1,2 @@
-export const AUTH_SIGN_UP = "AUTH_SIGN_UP";
+
+export const SIGNUP_ACTION = 'SIGNUP_ACTION'

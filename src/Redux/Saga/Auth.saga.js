@@ -1,25 +1,25 @@
-import { call, put, takeEvery, all } from 'redux-saga/effects'
-import { signupApi } from '../../Common/API/Api';
-import * as ActionType from '../ActionType'
+import { all, call, put, takeEvery, takeLatest } from 'redux-saga/effects';
+import { AuthApi } from '../../context/AuthApi';
+import * as AT from '../ActionType'
 
-// worker Saga: will be fired on USER_FETCH_REQUESTED actions
-function* signup(action) {
+
+function* SignUp(action) {
    try {
-      const user = yield call(signupApi, action.payload);
-      yield put({type: "USER_FETCH_SUCCEEDED", user: user});
+      const user = yield call(AuthApi, action.payload);
+      // yield put({type: AT.SIGN_UP, user: action.payload});
    } catch (e) {
-      yield put({type: "USER_FETCH_FAILED", message: e.message});
+      // yield put({type: "USER_FETCH_FAILED", message: e.message});
    }
 }
 
-function* watchsignup() {
-  yield takeEvery(ActionType.SIGNUP_ACTION, signup);
+function* WatchSignup() {
+  yield takeEvery( AT.SIGN_UP, SignUp);
 }
 
-export function* signupsaga(){
-    yield all([
-      watchsignup()
-    ]
-    )
+export function* AllWatch() {
+   yield all([
+      WatchSignup()
+   ])
 }
 
+export default SignUp;

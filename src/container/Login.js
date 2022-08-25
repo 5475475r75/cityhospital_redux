@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import * as yup from 'yup';
 import { useFormik, Formik, Form } from 'formik';
 import { useDispatch } from 'react-redux';
-import { signinAction } from '../redux/action/Action';
+import { loginAction, signinAction, signupAction } from '../redux/action/Action';
 
 function Login(props) {
   const [login, setLogin] = useState("Login")
@@ -49,8 +49,14 @@ function Login(props) {
 
     enableReinitialize: true,
     onSubmit: (values, action) => {
-      action.resetForm()
-      dispatch(signinAction(values))
+      // alert(JSON.stringify(values, null, 2));
+      if(login === "Login"){
+        dispatch(loginAction(values))
+      }else{
+        dispatch(signupAction(values))
+        
+      }  
+      action.resetForm()  
 
     },
   });
@@ -95,8 +101,7 @@ function Login(props) {
                   <div className="row">
                     <div className="col-md-4 form-group">
                       <input type="text" name="name" className="form-control" id="name" placeholder="Your Name" onChange={handleChange} onBlur={handleBlur} value={values.name} />
-                      <p className='text-danger'>{errors.name && touched.name ? errors.name : ''}</p>
-
+                      <p className='text-danger'>{errors.name && touched.name ? errors.name : ''}</p>  
                     </div>
                   </div>
             }
